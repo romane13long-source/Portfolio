@@ -3,19 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Romane Long — Portfolio</title>
+  <title>Romane Long — MSc IA Applied to Business</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="chat.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
 
+  <!-- CURSOR -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- AURORA BACKGROUND -->
+  <div class="aurora" aria-hidden="true">
+    <div class="aurora__blob aurora__blob--1"></div>
+    <div class="aurora__blob aurora__blob--2"></div>
+    <div class="aurora__blob aurora__blob--3"></div>
+  </div>
+
   <!-- NAV -->
   <nav class="nav" id="nav">
-    <div class="nav__logo">RL</div>
+    <a href="#home" class="nav__logo">RL</a>
     <ul class="nav__links">
       <li><a href="#about">À propos</a></li>
+      <li><a href="#experience">Expérience</a></li>
+      <li><a href="#education">Formation</a></li>
+      <li><a href="#skills">Compétences</a></li>
       <li><a href="#projects">Projets</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -24,84 +38,325 @@
     </button>
   </nav>
 
-  <!-- HERO -->
+  <!-- ══════════════ HERO ══════════════ -->
   <section class="hero" id="home">
     <div class="hero__content">
-      <p class="hero__tag">Data · IA · Actuariat</p>
+      <div class="hero__badge">
+        <span class="hero__badge-dot"></span>
+        Disponible · Alternance Generali
+      </div>
       <h1 class="hero__title">
-        Bonjour, je suis<br />
-        <span class="gradient-text">Romane Long</span>
+        <span class="hero__greeting">Bonjour, je suis</span>
+        <span class="hero__name gradient-text">Romane Long</span>
       </h1>
-      <p class="hero__sub">Étudiante en Master IA Applied to Business à Eugenia School, en alternance chez Generali. Je construis des projets mêlant data, automatisation et intelligence artificielle.</p>
+      <p class="hero__roles">
+        <span class="typed-text" id="typedText"></span>
+        <span class="typed-cursor">|</span>
+      </p>
+      <p class="hero__sub">MSc IA Applied to Business · Eugenia School<br/>Technicienne d'actuariat chez Generali · Data & IA</p>
       <div class="hero__actions">
         <a href="#projects" class="btn btn--primary">Voir mes projets</a>
-        <a href="#contact" class="btn btn--ghost">Me contacter</a>
+        <a href="/CV_R.L.pdf" download class="btn btn--ghost">Télécharger mon CV</a>
+      </div>
+      <div class="hero__stats">
+        <div class="stat-card">
+          <span class="stat-card__num" data-target="6">0</span><span class="stat-card__unit">+</span>
+          <span class="stat-card__label">Projets</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__num" data-target="6500">0</span><span class="stat-card__unit">+</span>
+          <span class="stat-card__label">Films scrapés</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__num" data-target="3">0</span><span class="stat-card__unit"> ans</span>
+          <span class="stat-card__label">d'études en data</span>
+        </div>
       </div>
     </div>
     <div class="hero__visual" aria-hidden="true">
-      <div class="blob"></div>
-      <div class="avatar-ring">
-        <div class="avatar-initials">RL</div>
+      <div class="avatar-orbit">
+        <div class="orbit-ring orbit-ring--1">
+          <div class="orbit-dot"></div>
+        </div>
+        <div class="orbit-ring orbit-ring--2">
+          <div class="orbit-dot"></div>
+        </div>
+        <div class="avatar-glow"></div>
+        <div class="avatar-card">
+          <div class="avatar-initials">RL</div>
+        </div>
       </div>
     </div>
-    <div class="hero__scroll" id="scrollHint">
+    <a href="#about" class="hero__scroll" aria-label="Défiler">
       <span>Scroll</span>
       <div class="hero__scroll-line"></div>
-    </div>
+    </a>
   </section>
 
-  <!-- ABOUT -->
-  <section class="section about" id="about">
+  <!-- ══════════════ ABOUT ══════════════ -->
+  <section class="section" id="about">
     <div class="container">
-      <h2 class="section__title">À propos</h2>
+      <div class="section__header">
+        <span class="section__label">01 · À propos</span>
+        <h2 class="section__title">Qui suis-je ?</h2>
+      </div>
       <div class="about__grid">
-        <div class="about__text">
-          <p>Passionnée par la data et l'intelligence artificielle, je prépare un Master "IA Applied to Business" à Eugenia School tout en étant en alternance chez Generali, au sein du service Techex (Global Corporate &amp; Commercial).</p>
-          <p>Mes missions : analyse de données, études statistiques, pilotage de la performance et soutien aux équipes business. J'aime construire des outils concrets qui ont un impact direct.</p>
+        <div class="glass-card about__bio">
+          <p>Passionnée par la donnée et l'intelligence artificielle, je prépare un <strong>MSc IA Applied to Business</strong> à Eugenia School tout en étant en alternance chez <strong>Generali</strong> (service Techex – Global Corporate & Commercial).</p>
+          <p>Mes missions au quotidien : analyse de données, études statistiques, pilotage de la performance et soutien aux équipes business. J'aime construire des outils concrets qui ont un impact réel.</p>
+          <p>Avant l'IA, j'ai une solide base en <strong>Économie-Finance</strong> (Aix-Marseille Université), qui m'aide à lire les données avec une perspective métier.</p>
+          <div class="about__langs">
+            <div class="lang-badge"><span class="lang-flag">🇫🇷</span> Français <strong>Natif</strong></div>
+            <div class="lang-badge"><span class="lang-flag">🇬🇧</span> Anglais <strong>B1</strong> · Séjour Londres</div>
+          </div>
         </div>
-        <div class="about__skills">
-          <div class="skill-tag">Python</div>
-          <div class="skill-tag">Power BI</div>
-          <div class="skill-tag">Tableau</div>
-          <div class="skill-tag">UiPath (RPA)</div>
-          <div class="skill-tag">SQL</div>
-          <div class="skill-tag">Next.js</div>
-          <div class="skill-tag">JavaScript</div>
-          <div class="skill-tag">RAG / LLMs</div>
-          <div class="skill-tag">Web Scraping</div>
-          <div class="skill-tag">Git / GitHub</div>
-          <div class="skill-tag">Supabase</div>
-          <div class="skill-tag">Statistiques</div>
+        <div class="about__side">
+          <div class="glass-card about__interest-card">
+            <h3 class="about__interest-title">Centres d'intérêt</h3>
+            <div class="interest-list">
+              <div class="interest-item"><span>🧗</span> Escalade (section sportive)</div>
+              <div class="interest-item"><span>🐴</span> Équitation (Galop 4)</div>
+              <div class="interest-item"><span>🏃</span> Running</div>
+              <div class="interest-item"><span>🏙️</span> Think Tank · Acteur Immo</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PROJECTS -->
-  <section class="section projects" id="projects">
+  <!-- ══════════════ EXPERIENCE ══════════════ -->
+  <section class="section section--alt" id="experience">
     <div class="container">
-      <h2 class="section__title">Mes projets</h2>
-      <p class="section__sub">Projets scolaires &amp; professionnels</p>
+      <div class="section__header">
+        <span class="section__label">02 · Expérience</span>
+        <h2 class="section__title">Parcours professionnel</h2>
+      </div>
+      <div class="timeline">
+
+        <div class="timeline__item timeline__item--left reveal">
+          <div class="timeline__dot timeline__dot--accent"></div>
+          <div class="glass-card timeline__card">
+            <div class="timeline__header">
+              <span class="timeline__company">Generali</span>
+              <span class="timeline__period">2025 – Présent</span>
+            </div>
+            <h3 class="timeline__role">Technicienne d'actuariat</h3>
+            <span class="timeline__dept">Global Corporate & Commercial · Techex</span>
+            <ul class="timeline__bullets">
+              <li>Analyse de données et études statistiques</li>
+              <li>Pilotage de la performance via Power BI</li>
+              <li>Automatisation RPA avec UiPath</li>
+              <li>Soutien aux équipes business dans leurs décisions</li>
+            </ul>
+            <div class="timeline__tags">
+              <span>Power BI</span><span>UiPath</span><span>SQL</span><span>Python</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline__item timeline__item--right reveal">
+          <div class="timeline__dot"></div>
+          <div class="glass-card timeline__card">
+            <div class="timeline__header">
+              <span class="timeline__company">Société Générale</span>
+              <span class="timeline__period">Fév. – Août 2024</span>
+            </div>
+            <h3 class="timeline__role">Conseillère</h3>
+            <ul class="timeline__bullets">
+              <li>Support back-office : opérations bancaires, stocks de cartes, clôtures</li>
+              <li>Sensibilisation à la cybersécurité</li>
+              <li>Rebond commercial, conseil épargne et placements</li>
+            </ul>
+            <div class="timeline__tags">
+              <span>Finance</span><span>Relation client</span><span>Cybersécurité</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline__item timeline__item--left reveal">
+          <div class="timeline__dot"></div>
+          <div class="glass-card timeline__card">
+            <div class="timeline__header">
+              <span class="timeline__company">Etic Événement</span>
+              <span class="timeline__period">2020 – 2024</span>
+            </div>
+            <h3 class="timeline__role">Hôtesse d'accueil évènementiel</h3>
+            <ul class="timeline__bullets">
+              <li>Coordination des intervenants et gestion des flux d'invités</li>
+              <li>Accueil VIP et gestion de projets évènementiels</li>
+            </ul>
+            <div class="timeline__tags">
+              <span>Événementiel</span><span>Gestion de projet</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline__item timeline__item--right reveal">
+          <div class="timeline__dot"></div>
+          <div class="glass-card timeline__card">
+            <div class="timeline__header">
+              <span class="timeline__company">Decathlon</span>
+              <span class="timeline__period">2020 – 2023</span>
+            </div>
+            <h3 class="timeline__role">Conseillère de vente</h3>
+            <ul class="timeline__bullets">
+              <li>Gestion des stocks et merchandising</li>
+              <li>Relation client : écoute et conseils personnalisés</li>
+            </ul>
+            <div class="timeline__tags">
+              <span>Commerce</span><span>Stock</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ EDUCATION ══════════════ -->
+  <section class="section" id="education">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__label">03 · Formation</span>
+        <h2 class="section__title">Parcours académique</h2>
+      </div>
+      <div class="timeline">
+
+        <div class="timeline__item timeline__item--left reveal">
+          <div class="timeline__dot timeline__dot--accent"></div>
+          <div class="glass-card timeline__card">
+            <div class="timeline__header">
+              <span class="timeline__company">Eugenia School</span>
+              <span class="timeline__period">2025 – 2027</span>
+            </div>
+            <h3 class="timeline__role">MSc IA Applied to Business</h3>
+            <p class="timeline__desc">Formation orientée IA appliquée aux enjeux business : data, machine learning, automatisation, CRM et data storytelling.</p>
+            <div class="timeline__tags">
+              <span>Python</span><span>Power BI</span><span>Machine Learning</span><span>SQL</span><span>HubSpot</span><span>Notion</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline__item timeline__item--right reveal">
+          <div class="timeline__dot"></div>
+          <div class="glass-card timeline__card">
+            <div class="timeline__header">
+              <span class="timeline__company">Aix-Marseille Université</span>
+              <span class="timeline__period">2020 – 2024</span>
+            </div>
+            <h3 class="timeline__role">Licence Économie-Finance</h3>
+            <p class="timeline__desc">Formation solide en économétrie, statistiques, mathématiques, probabilités, macroéconomie et analyse financière.</p>
+            <div class="timeline__highlight">
+              <span class="highlight-icon">📍</span>
+              <span>Projet de recherche : Impact du programme Euro-Méditerranée sur les prix immobiliers à Marseille — collecte de données, tests d'hypothèses, tableaux croisés (Excel)</span>
+            </div>
+            <div class="timeline__tags">
+              <span>Économétrie</span><span>Statistiques</span><span>Excel</span><span>Finance</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ SKILLS ══════════════ -->
+  <section class="section section--alt" id="skills">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__label">04 · Compétences</span>
+        <h2 class="section__title">Stack technique</h2>
+      </div>
+      <div class="skills__grid">
+
+        <div class="glass-card skill-group reveal">
+          <div class="skill-group__icon">📊</div>
+          <h3 class="skill-group__title">Data & Analyse</h3>
+          <div class="skill-tags">
+            <span>Python</span><span>R-Studio</span><span>SQL</span><span>Excel</span>
+            <span>Statistiques</span><span>Modélisation</span><span>Prévisions</span>
+          </div>
+        </div>
+
+        <div class="glass-card skill-group reveal">
+          <div class="skill-group__icon">📈</div>
+          <h3 class="skill-group__title">BI & Visualisation</h3>
+          <div class="skill-tags">
+            <span>Power BI</span><span>Tableau</span><span>Google Analytics</span>
+            <span>Data Storytelling</span><span>KPIs</span>
+          </div>
+        </div>
+
+        <div class="glass-card skill-group reveal">
+          <div class="skill-group__icon">🤖</div>
+          <h3 class="skill-group__title">IA & Automatisation</h3>
+          <div class="skill-tags">
+            <span>UiPath (RPA)</span><span>Machine Learning</span><span>RAG</span>
+            <span>LLMs</span><span>Web Scraping</span><span>Chatbots</span>
+          </div>
+        </div>
+
+        <div class="glass-card skill-group reveal">
+          <div class="skill-group__icon">💼</div>
+          <h3 class="skill-group__title">Business & Outils</h3>
+          <div class="skill-tags">
+            <span>HubSpot</span><span>Notion</span><span>CRM</span>
+            <span>Gestion des risques</span><span>Finance</span><span>Git</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ PROJECTS ══════════════ -->
+  <section class="section" id="projects">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__label">05 · Projets</span>
+        <h2 class="section__title">Réalisations</h2>
+      </div>
+      <div class="projects__filters">
+        <button class="filter-btn filter-btn--active" data-filter="all">Tous</button>
+        <button class="filter-btn" data-filter="pro">Pro</button>
+        <button class="filter-btn" data-filter="school">École</button>
+      </div>
       <div class="projects__grid" id="projectsGrid"></div>
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section class="section contact" id="contact">
-    <div class="container contact__inner">
-      <h2 class="section__title">Contact</h2>
-      <p class="section__sub">Une question, une opportunité ? Écrivez-moi.</p>
-      <a href="mailto:votre@email.com" class="btn btn--primary contact__btn">votre@email.com</a>
-      <div class="contact__socials">
-        <a href="https://github.com/romane13long-source" target="_blank" rel="noopener" class="social-link">GitHub</a>
-        <a href="https://www.linkedin.com/in/romane-long-a19a33211" target="_blank" rel="noopener" class="social-link">LinkedIn</a>
+  <!-- ══════════════ CONTACT ══════════════ -->
+  <section class="section section--alt" id="contact">
+    <div class="container">
+      <div class="section__header section__header--center">
+        <span class="section__label">06 · Contact</span>
+        <h2 class="section__title">Travaillons ensemble</h2>
+        <p class="section__sub">Une opportunité, une question ? Je réponds rapidement.</p>
+      </div>
+      <div class="contact__grid">
+        <a href="mailto:Romane13.long@gmail.com" class="glass-card contact__card contact__card--main reveal">
+          <span class="contact__card-icon">✉️</span>
+          <span class="contact__card-label">Email</span>
+          <span class="contact__card-value">Romane13.long@gmail.com</span>
+        </a>
+        <a href="https://www.linkedin.com/in/romane-long-a19a33211" target="_blank" rel="noopener" class="glass-card contact__card reveal">
+          <span class="contact__card-icon">💼</span>
+          <span class="contact__card-label">LinkedIn</span>
+          <span class="contact__card-value">romane-long</span>
+        </a>
+        <a href="https://github.com/romane13long-source" target="_blank" rel="noopener" class="glass-card contact__card reveal">
+          <span class="contact__card-icon">🐙</span>
+          <span class="contact__card-label">GitHub</span>
+          <span class="contact__card-value">romane13long-source</span>
+        </a>
       </div>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer class="footer">
-    <p>© 2026 Romane Long — Fait avec soin</p>
+    <p>© 2026 Romane Long · MSc IA Applied to Business · Eugenia School</p>
   </footer>
 
   <!-- CHATBOT WIDGET -->
