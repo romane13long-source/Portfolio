@@ -1,2 +1,19 @@
+# Clé API — ne jamais committer
 .env
+config.js
+
+# Dépendances
 node_modules/
+
+# Fichiers macOS
+.DS_Store
+*.webloc
+
+# Ressources locales non publiées
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.twb
+*.twbx
+make.json

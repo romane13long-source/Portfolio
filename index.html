@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Romane Long — Portfolio</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="chat.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
 </head>
@@ -26,12 +27,12 @@
   <!-- HERO -->
   <section class="hero" id="home">
     <div class="hero__content">
-      <p class="hero__tag">Développeuse &amp; Étudiante</p>
+      <p class="hero__tag">Data · IA · Actuariat</p>
       <h1 class="hero__title">
         Bonjour, je suis<br />
         <span class="gradient-text">Romane Long</span>
       </h1>
-      <p class="hero__sub">Je conçois et développe des expériences digitales soignées, mêlant projets professionnels et travaux scolaires.</p>
+      <p class="hero__sub">Étudiante en Master IA Applied to Business à Eugenia School, en alternance chez Generali. Je construis des projets mêlant data, automatisation et intelligence artificielle.</p>
       <div class="hero__actions">
         <a href="#projects" class="btn btn--primary">Voir mes projets</a>
         <a href="#contact" class="btn btn--ghost">Me contacter</a>
@@ -55,16 +56,22 @@
       <h2 class="section__title">À propos</h2>
       <div class="about__grid">
         <div class="about__text">
-          <p>Passionnée par le développement web et la création numérique, je construis des projets qui allient technique et esthétique. Ce portfolio regroupe mes réalisations professionnelles et scolaires.</p>
-          <p>Toujours en quête d'apprentissage, j'aime relever de nouveaux défis et travailler sur des sujets variés.</p>
+          <p>Passionnée par la data et l'intelligence artificielle, je prépare un Master "IA Applied to Business" à Eugenia School tout en étant en alternance chez Generali, au sein du service Techex (Global Corporate &amp; Commercial).</p>
+          <p>Mes missions : analyse de données, études statistiques, pilotage de la performance et soutien aux équipes business. J'aime construire des outils concrets qui ont un impact direct.</p>
         </div>
         <div class="about__skills">
-          <div class="skill-tag">HTML / CSS</div>
-          <div class="skill-tag">JavaScript</div>
           <div class="skill-tag">Python</div>
+          <div class="skill-tag">Power BI</div>
+          <div class="skill-tag">Tableau</div>
+          <div class="skill-tag">UiPath (RPA)</div>
+          <div class="skill-tag">SQL</div>
+          <div class="skill-tag">Next.js</div>
+          <div class="skill-tag">JavaScript</div>
+          <div class="skill-tag">RAG / LLMs</div>
+          <div class="skill-tag">Web Scraping</div>
           <div class="skill-tag">Git / GitHub</div>
-          <div class="skill-tag">UI Design</div>
-          <div class="skill-tag">À compléter...</div>
+          <div class="skill-tag">Supabase</div>
+          <div class="skill-tag">Statistiques</div>
         </div>
       </div>
     </div>
@@ -74,15 +81,8 @@
   <section class="section projects" id="projects">
     <div class="container">
       <h2 class="section__title">Mes projets</h2>
-      <p class="section__sub">Les projets arrivent bientôt — revenez vite !</p>
-      <div class="projects__grid" id="projectsGrid">
-        <!-- Les cartes projet seront injectées par script.js -->
-        <div class="project-card project-card--placeholder">
-          <div class="project-card__icon">🚧</div>
-          <h3>Projets en cours d'ajout</h3>
-          <p>Cette section sera bientôt remplie de mes travaux professionnels et scolaires.</p>
-        </div>
-      </div>
+      <p class="section__sub">Projets scolaires &amp; professionnels</p>
+      <div class="projects__grid" id="projectsGrid"></div>
     </div>
   </section>
 
@@ -94,7 +94,7 @@
       <a href="mailto:votre@email.com" class="btn btn--primary contact__btn">votre@email.com</a>
       <div class="contact__socials">
         <a href="https://github.com/romane13long-source" target="_blank" rel="noopener" class="social-link">GitHub</a>
-        <a href="#" class="social-link">LinkedIn</a>
+        <a href="https://www.linkedin.com/in/romane-long-a19a33211" target="_blank" rel="noopener" class="social-link">LinkedIn</a>
       </div>
     </div>
   </section>
@@ -104,6 +104,39 @@
     <p>© 2026 Romane Long — Fait avec soin</p>
   </footer>
 
+  <!-- CHATBOT WIDGET -->
+  <div class="chat-widget" id="chatWidget">
+    <button class="chat-toggle" id="chatToggle" aria-label="Ouvrir le chat">
+      <span class="chat-toggle__icon chat-toggle__icon--open">💬</span>
+      <span class="chat-toggle__icon chat-toggle__icon--close">✕</span>
+    </button>
+    <div class="chat-panel" id="chatPanel">
+      <div class="chat-header">
+        <div class="chat-header__avatar">RL</div>
+        <div>
+          <p class="chat-header__name">Romane Long</p>
+          <p class="chat-header__status">Assistant portfolio</p>
+        </div>
+      </div>
+      <div class="chat-messages" id="chatMessages">
+        <div class="chat-message chat-message--bot">
+          Bonjour ! Je suis l'assistant de Romane. Posez-moi des questions sur son parcours, ses compétences ou ses projets !
+        </div>
+      </div>
+      <div class="chat-suggestions" id="chatSuggestions">
+        <button class="chat-suggestion">Ses projets</button>
+        <button class="chat-suggestion">Sa formation</button>
+        <button class="chat-suggestion">Son alternance</button>
+      </div>
+      <div class="chat-input-area">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Posez votre question..." autocomplete="off" />
+        <button class="chat-send" id="chatSend" aria-label="Envoyer">➜</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
   <script src="script.js"></script>
+  <script src="chat.js"></script>
 </body>
 </html>

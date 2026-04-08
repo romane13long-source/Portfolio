@@ -410,6 +410,23 @@ ul { list-style: none; }
 
 .project-card__links a:hover { opacity: .75; }
 
+.project-card__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-top: .25rem;
+}
+
+.project-chip {
+  padding: .2rem .65rem;
+  border-radius: 999px;
+  background: rgba(124,110,247,.12);
+  border: 1px solid rgba(124,110,247,.25);
+  font-size: .72rem;
+  color: #a89ff9;
+  font-weight: 500;
+}
+
 /* =============================================
    CONTACT
    ============================================= */
