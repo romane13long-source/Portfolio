@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Romane Long — Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav__logo">RL</div>
+    <ul class="nav__links">
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#projects">Projets</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav__burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero__content">
+      <p class="hero__tag">Développeuse &amp; Étudiante</p>
+      <h1 class="hero__title">
+        Bonjour, je suis<br />
+        <span class="gradient-text">Romane Long</span>
+      </h1>
+      <p class="hero__sub">Je conçois et développe des expériences digitales soignées, mêlant projets professionnels et travaux scolaires.</p>
+      <div class="hero__actions">
+        <a href="#projects" class="btn btn--primary">Voir mes projets</a>
+        <a href="#contact" class="btn btn--ghost">Me contacter</a>
+      </div>
+    </div>
+    <div class="hero__visual" aria-hidden="true">
+      <div class="blob"></div>
+      <div class="avatar-ring">
+        <div class="avatar-initials">RL</div>
+      </div>
+    </div>
+    <div class="hero__scroll" id="scrollHint">
+      <span>Scroll</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section about" id="about">
+    <div class="container">
+      <h2 class="section__title">À propos</h2>
+      <div class="about__grid">
+        <div class="about__text">
+          <p>Passionnée par le développement web et la création numérique, je construis des projets qui allient technique et esthétique. Ce portfolio regroupe mes réalisations professionnelles et scolaires.</p>
+          <p>Toujours en quête d'apprentissage, j'aime relever de nouveaux défis et travailler sur des sujets variés.</p>
+        </div>
+        <div class="about__skills">
+          <div class="skill-tag">HTML / CSS</div>
+          <div class="skill-tag">JavaScript</div>
+          <div class="skill-tag">Python</div>
+          <div class="skill-tag">Git / GitHub</div>
+          <div class="skill-tag">UI Design</div>
+          <div class="skill-tag">À compléter...</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section projects" id="projects">
+    <div class="container">
+      <h2 class="section__title">Mes projets</h2>
+      <p class="section__sub">Les projets arrivent bientôt — revenez vite !</p>
+      <div class="projects__grid" id="projectsGrid">
+        <!-- Les cartes projet seront injectées par script.js -->
+        <div class="project-card project-card--placeholder">
+          <div class="project-card__icon">🚧</div>
+          <h3>Projets en cours d'ajout</h3>
+          <p>Cette section sera bientôt remplie de mes travaux professionnels et scolaires.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section contact" id="contact">
+    <div class="container contact__inner">
+      <h2 class="section__title">Contact</h2>
+      <p class="section__sub">Une question, une opportunité ? Écrivez-moi.</p>
+      <a href="mailto:votre@email.com" class="btn btn--primary contact__btn">votre@email.com</a>
+      <div class="contact__socials">
+        <a href="https://github.com/romane13long-source" target="_blank" rel="noopener" class="social-link">GitHub</a>
+        <a href="#" class="social-link">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2026 Romane Long — Fait avec soin</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
