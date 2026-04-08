@@ -1053,6 +1053,191 @@ body:has(button:hover) .cursor-follower {
   .contact__card--main { grid-column: 1 / -1; }
 }
 
+/* =============================================
+   SCROLL PROGRESS BAR
+   ============================================= */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+  z-index: 200;
+  transition: width .1s linear;
+  box-shadow: 0 0 8px var(--accent);
+}
+
+/* =============================================
+   METEOR SHOWER
+   ============================================= */
+.meteors {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.meteor {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(to bottom, rgba(124,110,247,0), rgba(124,110,247,.8), rgba(255,255,255,.9));
+  border-radius: 999px;
+  animation: meteorFall linear infinite;
+  opacity: 0;
+}
+
+@keyframes meteorFall {
+  0%   { transform: translateY(-100px) translateX(0) rotate(215deg); opacity: 0; }
+  5%   { opacity: 1; }
+  80%  { opacity: .6; }
+  100% { transform: translateY(110vh) translateX(-400px) rotate(215deg); opacity: 0; }
+}
+
+/* =============================================
+   BORDER BEAM (project cards)
+   ============================================= */
+.border-beam {
+  position: relative;
+  overflow: hidden;
+}
+
+.border-beam::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--beam-angle, 0deg),
+    transparent 0deg,
+    var(--accent) 60deg,
+    var(--accent2) 120deg,
+    transparent 180deg
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: beamRotate 3s linear infinite;
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+.border-beam:hover::after { opacity: 1; }
+
+@keyframes beamRotate {
+  to { --beam-angle: 360deg; }
+}
+
+@property --beam-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* =============================================
+   SPOTLIGHT ON CARDS
+   ============================================= */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(124,110,247,.18) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: opacity .3s;
+  opacity: 0;
+  z-index: 0;
+  left: var(--mx, 50%);
+  top:  var(--my, 50%);
+}
+
+.spotlight-card:hover::before { opacity: 1; }
+.spotlight-card > * { position: relative; z-index: 1; }
+
+/* =============================================
+   SHIMMER ON SKILL TAGS
+   ============================================= */
+.skill-tags span {
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-tags span::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+  transform: skewX(-20deg);
+  animation: shimmer 3.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%   { left: -100%; }
+  50%  { left: 150%; }
+  100% { left: 150%; }
+}
+
+/* =============================================
+   MAGNETIC BUTTON
+   ============================================= */
+.btn--magnetic {
+  transition: transform .3s cubic-bezier(.23,1,.32,1), box-shadow .3s;
+}
+
+/* =============================================
+   HERO TITLE SPLIT ANIMATION
+   ============================================= */
+.hero__name .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(40px) rotate(4deg);
+  animation: charReveal .6s cubic-bezier(.23,1,.32,1) forwards;
+}
+
+@keyframes charReveal {
+  to { opacity: 1; transform: translateY(0) rotate(0deg); }
+}
+
+/* =============================================
+   ANIMATED GRADIENT TEXT (section titles)
+   ============================================= */
+.section__title {
+  background: linear-gradient(135deg, var(--text) 40%, var(--accent) 60%, var(--text) 80%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientSlide 4s linear infinite;
+}
+
+@keyframes gradientSlide {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* =============================================
+   GLOWING TIMELINE DOT ON HOVER
+   ============================================= */
+.timeline__item:hover .timeline__dot {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(124,110,247,.2), 0 0 16px var(--accent);
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
 @media (max-width: 768px) {
   .nav { padding: 0 1.5rem; }
   .nav__links { display: none; flex-direction: column; position: fixed; top: var(--nav-h); left: 0; right: 0; background: rgba(7,7,15,.96); padding: 1.5rem; gap: 1.25rem; border-bottom: 1px solid var(--glass-border); backdrop-filter: blur(20px); }

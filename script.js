@@ -1,4 +1,45 @@
 /* =============================================
+   SCROLL PROGRESS BAR
+   ============================================= */
+const progressBar = document.getElementById('scrollProgress');
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total    = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.width = (scrolled / total * 100) + '%';
+}, { passive: true });
+
+/* =============================================
+   METEOR SHOWER
+   ============================================= */
+(function spawnMeteors() {
+  const container = document.getElementById('meteors');
+  if (!container) return;
+  const COUNT = 14;
+  for (let i = 0; i < COUNT; i++) {
+    const m = document.createElement('div');
+    m.className = 'meteor';
+    const left     = Math.random() * 110;
+    const delay    = Math.random() * 8;
+    const duration = 3 + Math.random() * 5;
+    const height   = 50 + Math.random() * 80;
+    m.style.cssText = `left:${left}%;animation-duration:${duration}s;animation-delay:${delay}s;height:${height}px;`;
+    container.appendChild(m);
+  }
+})();
+
+/* =============================================
+   HERO TITLE — CHARACTER SPLIT ANIMATION
+   ============================================= */
+(function splitHeroName() {
+  const el = document.querySelector('.hero__name');
+  if (!el) return;
+  const text = el.textContent;
+  el.innerHTML = text.split('').map((c, i) =>
+    `<span class="char" style="animation-delay:${0.4 + i * 0.04}s">${c === ' ' ? '&nbsp;' : c}</span>`
+  ).join('');
+})();
+
+/* =============================================
    CUSTOM CURSOR
    ============================================= */
 const cursor   = document.getElementById('cursor');
@@ -219,6 +260,8 @@ function renderProjects(filter = 'all') {
 
   document.querySelectorAll('.project-card').forEach(observeReveal);
   initTilt();
+  initBorderBeam();
+  initSpotlight();
 }
 
 // Filter buttons
@@ -231,6 +274,47 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 });
 
 renderProjects();
+
+/* =============================================
+   SPOTLIGHT ON GLASS CARDS
+   ============================================= */
+function initSpotlight() {
+  document.querySelectorAll('.glass-card').forEach(card => {
+    card.classList.add('spotlight-card');
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - rect.top)  + 'px');
+    });
+  });
+}
+initSpotlight();
+
+/* =============================================
+   BORDER BEAM ON PROJECT CARDS
+   ============================================= */
+function initBorderBeam() {
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.classList.add('border-beam');
+  });
+}
+initBorderBeam();
+
+/* =============================================
+   MAGNETIC BUTTONS
+   ============================================= */
+document.querySelectorAll('.btn--primary, .btn--ghost').forEach(btn => {
+  btn.classList.add('btn--magnetic');
+  btn.addEventListener('mousemove', e => {
+    const rect   = btn.getBoundingClientRect();
+    const x      = (e.clientX - rect.left - rect.width  / 2) * 0.25;
+    const y      = (e.clientY - rect.top  - rect.height / 2) * 0.25;
+    btn.style.transform = `translate(${x}px, ${y}px) translateY(-2px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+  });
+});
 
 /* =============================================
    ACTIVE NAV LINK ON SCROLL
