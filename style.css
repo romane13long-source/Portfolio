@@ -179,6 +179,31 @@ body:has(button:hover) .cursor-follower {
 .nav__links a:hover { color: var(--text); }
 .nav__links a:hover::after { transform: scaleX(1); }
 
+/* Language toggle */
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .3rem .75rem;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass);
+  color: var(--text-muted);
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color .2s, color .2s, background .2s;
+  font-family: var(--font-body);
+  backdrop-filter: blur(8px);
+}
+
+.lang-toggle:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.lang-toggle__flag { font-size: .9rem; line-height: 1; }
+
 .nav__burger {
   display: none;
   flex-direction: column;
@@ -560,6 +585,11 @@ body:has(button:hover) .cursor-follower {
   grid-template-columns: 3fr 2fr;
   gap: 1.5rem;
   align-items: start;
+}
+
+.about__bio--full {
+  grid-column: 1 / -1;
+  max-width: 720px;
 }
 
 .about__bio {
@@ -1052,6 +1082,27 @@ body:has(button:hover) .cursor-follower {
   .contact__grid { grid-template-columns: 1fr 1fr; }
   .contact__card--main { grid-column: 1 / -1; }
 }
+
+/* =============================================
+   SHADER BACKGROUND (Three.js)
+   ============================================= */
+.shader-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  opacity: .55;
+  pointer-events: none;
+}
+
+.shader-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* Slightly dim aurora when shader is active */
+.aurora { opacity: .5; }
 
 /* =============================================
    SCROLL PROGRESS BAR
