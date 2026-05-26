@@ -6,490 +6,528 @@
 <title>Romane ✨</title>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#000;-webkit-user-select:none;user-select:none;}
 
-html,body{
-  width:100%;height:100%;overflow:hidden;
-  background:#000;
-  touch-action:none;
-  -webkit-user-select:none;user-select:none;
+/* ── PHOTO PICKER SCREEN ── */
+#pick-screen{
+  position:fixed;inset:0;z-index:999;
+  background:radial-gradient(ellipse at 40% 60%,#0a9dab,#074a5c 55%,#02181f);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;
 }
-
-/* ── PHOTO BASE ── */
-#photo-bg{
-  position:fixed;
-  inset:0;
-  background-image:url('romane.jpg');
-  background-size:cover;
-  background-position:center top;
-  /* fallback si pas de photo */
-  background-color:#0a9dab;
-  will-change:transform;
-  transition:transform .08s linear;
+#pick-screen h1{color:#fff;font:700 22px/1.3 system-ui;text-align:center;padding:0 30px}
+#pick-screen p{color:rgba(255,255,255,.65);font:400 13px system-ui;text-align:center;padding:0 30px}
+#file-input{display:none}
+#pick-btn{
+  background:linear-gradient(135deg,#00d4b8,#7c3aed);
+  border:none;border-radius:50px;color:#fff;
+  font:700 16px system-ui;padding:16px 40px;
+  cursor:pointer;box-shadow:0 8px 30px rgba(0,212,184,.4);
+  -webkit-tap-highlight-color:transparent;
 }
-/* Gradient subtil au bas pour profondeur */
-#photo-bg::after{
-  content:'';
-  position:absolute;
-  inset:0;
-  background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.25)100%);
-}
-
-/* ── CALQUES PARALLAXE ── */
-.layer{
-  position:fixed;
-  inset:0;
-  will-change:transform;
-  transition:transform .08s linear;
-  pointer-events:none;
-}
-
-/* ── ANNEAUX ORBITAUX ── */
-#rings{
+#pick-btn:active{transform:scale(.96)}
+.pick-preview{
+  width:100px;height:100px;border-radius:20px;
+  background:rgba(255,255,255,.08);border:2px dashed rgba(255,255,255,.3);
   display:flex;align-items:center;justify-content:center;
+  font-size:36px;overflow:hidden;
 }
+.pick-preview img{width:100%;height:100%;object-fit:cover;display:none}
+
+/* ── SCENE ── */
+#scene{position:fixed;inset:0;display:none}
+
+/* ── LAYERS ── */
+.layer{position:fixed;inset:0;will-change:transform;pointer-events:none}
+
+/* Photo de fond */
+#photo-bg{
+  background-size:cover;background-position:center top;
+  background-color:#0a9dab;
+  z-index:0;
+}
+#photo-bg::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.05) 0%,transparent 40%,rgba(0,0,0,.2) 100%);
+}
+
+/* ── ANNEAUX ── */
+#rings{z-index:2;display:flex;align-items:center;justify-content:center;top:28%;height:44%}
 .ring{
-  position:absolute;
-  border-radius:50%;
-  border:1.5px solid rgba(160,255,235,.4);
-  box-shadow:0 0 20px rgba(60,220,200,.2),inset 0 0 20px rgba(60,220,200,.05);
-  animation:ring-spin linear infinite;
+  position:absolute;border-radius:50%;
+  border:1.5px solid rgba(160,255,235,.45);
+  animation:rspin linear infinite;
 }
 .ring::before{
-  content:'';
-  position:absolute;
-  inset:-1px;
-  border-radius:50%;
-  background:conic-gradient(
-    rgba(80,255,220,.7) 0deg,
-    transparent 40deg,
-    transparent 320deg,
-    rgba(80,255,220,.7) 360deg
-  );
-  border-radius:50%;
+  content:'';position:absolute;inset:0;border-radius:50%;
+  background:conic-gradient(rgba(80,255,220,.8) 0deg,transparent 35deg,transparent 325deg,rgba(80,255,220,.8) 360deg);
 }
-.ring-1{
-  width:72vw;height:26vw;
-  transform:rotateX(72deg);
-  animation-duration:9s;
-}
-.ring-2{
-  width:82vw;height:30vw;
-  transform:rotateX(72deg) rotateZ(30deg);
-  animation-duration:13s;
-  animation-direction:reverse;
-  border-color:rgba(180,140,255,.35);
-}
-.ring-2::before{
-  background:conic-gradient(
-    rgba(200,120,255,.7) 0deg,
-    transparent 40deg,
-    transparent 320deg,
-    rgba(200,120,255,.7) 360deg
-  );
-}
-/* centrer les rings verticalement sur le sujet */
-#rings{top:30%;height:40%;}
+.r1{width:76vw;height:27vw;animation-duration:8s}
+.r2{width:88vw;height:32vw;animation-duration:12s;animation-direction:reverse;
+  border-color:rgba(200,160,255,.4)}
+.r2::before{background:conic-gradient(rgba(200,140,255,.8) 0deg,transparent 35deg,transparent 325deg,rgba(200,140,255,.8) 360deg)}
 
-@keyframes ring-spin{
-  from{transform:rotateX(72deg) rotateZ(0deg)}
-  to  {transform:rotateX(72deg) rotateZ(360deg)}
+@keyframes rspin{
+  from{transform:rotateX(70deg) rotateZ(0deg)}
+  to  {transform:rotateX(70deg) rotateZ(360deg)}
 }
-.ring-2{animation-name:ring-spin2}
-@keyframes ring-spin2{
-  from{transform:rotateX(72deg) rotateZ(30deg)}
-  to  {transform:rotateX(72deg) rotateZ(390deg)}
-}
-
-/* ── BULLES ── */
-.bubble{
-  position:absolute;
-  border-radius:50%;
-  border:2px solid rgba(255,255,255,.45);
-  box-shadow:
-    0 4px 20px rgba(0,0,0,.35),
-    inset 0 1px 0 rgba(255,255,255,.5),
-    inset 0 -1px 0 rgba(0,0,0,.2);
-  overflow:hidden;
-  background:rgba(255,255,255,.08);
-  backdrop-filter:blur(6px);
-  animation:bfloat ease-in-out infinite;
-}
-.bubble::after{
-  content:'';
-  position:absolute;
-  top:10%;left:18%;
-  width:28%;height:18%;
-  background:rgba(255,255,255,.45);
-  border-radius:50%;
-  filter:blur(3px);
-  transform:rotate(-30deg);
-}
-.bubble-inner{
-  width:100%;height:100%;
-  background-size:cover;background-position:center;
-  border-radius:50%;
-}
-
-/* positions sur mobile (vw/vh) */
-.b1{width:18vw;height:18vw;left:4vw;top:18vh;animation-duration:4.8s;animation-delay:0s}
-.b2{width:14vw;height:14vw;left:6vw;top:58vh;animation-duration:3.9s;animation-delay:1.1s}
-.b3{width:20vw;height:20vw;left:72vw;top:14vh;animation-duration:5.2s;animation-delay:.4s}
-.b4{width:13vw;height:13vw;left:78vw;top:50vh;animation-duration:4.1s;animation-delay:1.6s}
-.b5{width:16vw;height:16vw;left:62vw;top:68vh;animation-duration:4.6s;animation-delay:.9s}
-.b6{width:11vw;height:11vw;left:18vw;top:75vh;animation-duration:3.5s;animation-delay:2s}
-
-.b1 .bubble-inner{background:linear-gradient(160deg,#2d1b3d,#6030a0,#1a0d2e)}
-.b2 .bubble-inner{background:linear-gradient(160deg,#1a3a4a,#0d6b7a,#083040)}
-.b3 .bubble-inner{background:linear-gradient(160deg,#3d3020,#7a6030,#2e2010)}
-.b4 .bubble-inner{background:linear-gradient(160deg,#3d3030,#6b4040,#2e2020)}
-.b5 .bubble-inner{background:linear-gradient(160deg,#1a3a2a,#2d6b4a,#0d2820)}
-.b6 .bubble-inner{background:linear-gradient(160deg,#2a2a3d,#4a4a70,#1a1a2e)}
-
-@keyframes bfloat{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-14px)}
-}
-
-/* ── CARTES PHOTOS PLATES ── */
-.pcard{
-  position:absolute;
-  border-radius:8px;
-  overflow:hidden;
-  box-shadow:0 6px 24px rgba(0,0,0,.5);
-  border:2px solid rgba(255,255,255,.2);
-  animation:cfloat ease-in-out infinite;
-}
-.pcard-inner{width:100%;height:100%;background-size:cover}
-
-.pc1{width:18vw;height:24vw;left:2vw;top:8vh;animation-duration:6.5s;animation-delay:.2s;--rot:-6deg}
-.pc2{width:16vw;height:21vw;left:3vw;top:46vh;animation-duration:5.2s;animation-delay:1.3s;--rot:4deg}
-.pc3{width:20vw;height:14vw;left:74vw;top:8vh;animation-duration:7s;animation-delay:.7s;--rot:5deg}
-.pc4{width:22vw;height:14vw;left:70vw;top:78vh;animation-duration:5.8s;animation-delay:1.9s;--rot:-3deg}
-
-.pc1 .pcard-inner{background:linear-gradient(180deg,#c8c0b0,#8a7060,#3a2820)}
-.pc2 .pcard-inner{background:linear-gradient(180deg,#b0b8c0,#607888,#202a30)}
-.pc3 .pcard-inner{background:linear-gradient(180deg,#d4e0d0,#8aaa90,#304838)}
-.pc4 .pcard-inner{background:linear-gradient(180deg,#c0c0c0,#707070,#202020)}
-
-@keyframes cfloat{
-  0%,100%{transform:translateY(0) rotate(var(--rot,0deg))}
-  50%{transform:translateY(-10px) rotate(calc(var(--rot,0deg) * -1))}
-}
-
-/* ── CARTE INSTAGRAM ── */
-#ig-card{
-  position:absolute;
-  right:4vw;top:18vh;
-  width:44vw;max-width:200px;
-  background:rgba(255,255,255,.13);
-  backdrop-filter:blur(18px) saturate(180%);
-  -webkit-backdrop-filter:blur(18px) saturate(180%);
-  border:1px solid rgba(255,255,255,.3);
-  border-radius:16px;
-  padding:10px;
-  box-shadow:0 8px 32px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.25);
-  animation:igfloat 4.5s ease-in-out infinite;
-  pointer-events:none;
-}
-.ig-head{display:flex;align-items:center;gap:7px;margin-bottom:7px}
-.ig-avatar{
-  width:26px;height:26px;border-radius:50%;flex-shrink:0;
-  background:linear-gradient(135deg,#f9a825,#e91e8c,#673ab7);
-  box-shadow:0 0 0 2px rgba(255,255,255,.5);
-}
-.ig-name{color:#fff;font-size:9px;font-weight:700;font-family:system-ui}
-.ig-lock{color:rgba(255,255,255,.6);font-size:7px;font-family:system-ui}
-.ig-stats{display:flex;gap:6px;margin-bottom:6px}
-.ig-s{text-align:center}
-.ig-s-n{color:#fff;font-size:9px;font-weight:700;display:block;font-family:system-ui}
-.ig-s-l{color:rgba(255,255,255,.6);font-size:6px;font-family:system-ui}
-.ig-loc{color:rgba(255,255,255,.7);font-size:7px;margin-bottom:6px;font-family:system-ui}
-.ig-btn{
-  display:block;width:100%;padding:4px;
-  background:rgba(255,255,255,.2);
-  border:1px solid rgba(255,255,255,.4);
-  border-radius:8px;
-  color:#fff;font-size:8px;font-weight:700;
-  text-align:center;font-family:system-ui;
-}
-@keyframes igfloat{
-  0%,100%{transform:translateY(0) rotate(-1.5deg)}
-  50%{transform:translateY(-10px) rotate(1.5deg)}
+.r2{animation-name:rspin2}
+@keyframes rspin2{
+  from{transform:rotateX(68deg) rotateZ(20deg)}
+  to  {transform:rotateX(68deg) rotateZ(380deg)}
 }
 
 /* ── LENS FLARE ── */
-#flares{mix-blend-mode:screen;pointer-events:none}
-.flare{
+#flares{z-index:3;mix-blend-mode:screen}
+.flare{position:absolute;animation:fpulse ease-in-out infinite}
+.fl1{
+  width:65vw;height:8px;top:55%;left:15%;
+  transform:rotate(-22deg);
+  background:linear-gradient(90deg,transparent,rgba(255,180,60,.8),rgba(255,80,200,.6),rgba(80,200,255,.8),transparent);
+}
+.fl2{
+  width:40vw;height:5px;top:66%;left:30%;
+  transform:rotate(15deg);animation-delay:.8s;
+  background:linear-gradient(90deg,transparent,rgba(160,255,100,.7),rgba(255,80,160,.6),transparent);
+}
+.fl3{
+  width:13vw;height:13vw;top:51%;left:40%;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.95),rgba(200,255,255,.4) 40%,transparent 70%);
+  filter:blur(2px);animation-delay:.4s;
+}
+.fl4{
+  width:50vw;height:4px;top:60%;left:10%;
+  transform:rotate(-8deg);animation-delay:1.2s;
+  background:linear-gradient(90deg,transparent,rgba(255,220,80,.5),rgba(180,80,255,.4),transparent);
+}
+@keyframes fpulse{0%,100%{opacity:.5}50%{opacity:1}}
+
+/* ── CARTES PLATES (photos Instagram) ── */
+#cards{z-index:4}
+.pc{
+  position:absolute;border-radius:10px;overflow:hidden;
+  box-shadow:0 8px 28px rgba(0,0,0,.55);
+  border:2px solid rgba(255,255,255,.22);
+  animation:cfloat ease-in-out infinite;
+}
+.pc-inner{
+  width:100%;height:100%;background-size:cover;background-position:center;
+}
+/* Positions calquées sur l'image de référence */
+.pc1{width:19vw;height:26vw;left:1vw;top:7vh;animation-duration:6s;animation-delay:.1s;--r:-8deg}
+.pc2{width:17vw;height:23vw;left:2vw;top:47vh;animation-duration:5s;animation-delay:1.2s;--r:5deg}
+.pc3{width:21vw;height:15vw;left:74vw;top:7vh;animation-duration:7s;animation-delay:.6s;--r:6deg}
+.pc4{width:23vw;height:16vw;left:69vw;top:78vh;animation-duration:5.5s;animation-delay:1.8s;--r:-4deg}
+
+/* Couleurs matchant les vraies photos Instagram */
+.pc1 .pc-inner{background:linear-gradient(165deg,#c8b89a 0%,#8a6a40 40%,#1a1208 100%)} /* London noir */
+.pc2 .pc-inner{background:linear-gradient(165deg,#e0eaf0 0%,#90b8d0 40%,#1a3040 100%)} /* Neige */
+.pc3 .pc-inner{background:linear-gradient(165deg,#e8e8e8 0%,#909090 40%,#101010 100%)} /* N&B rochers */
+.pc4 .pc-inner{background:linear-gradient(165deg,#d0c8a0 0%,#908040 40%,#201800 100%)} /* Event */
+
+@keyframes cfloat{
+  0%,100%{transform:translateY(0) rotate(var(--r,0deg))}
+  50%{transform:translateY(-11px) rotate(calc(var(--r,0deg)*-1))}
+}
+
+/* ── BULLES (dans les anneaux) ── */
+#bubbles{z-index:5}
+.bbl{
+  position:absolute;border-radius:50%;
+  border:2px solid rgba(255,255,255,.5);
+  box-shadow:0 4px 18px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(0,0,0,.2);
+  overflow:hidden;backdrop-filter:blur(5px);
+  animation:bfloat ease-in-out infinite;
+}
+.bbl::after{
+  content:'';position:absolute;top:8%;left:16%;
+  width:26%;height:16%;
+  background:rgba(255,255,255,.5);border-radius:50%;
+  filter:blur(3px);transform:rotate(-35deg);
+}
+.bi{width:100%;height:100%;border-radius:50%;background-size:cover;background-position:center}
+
+/* 6 bulles positionnées comme dans l'image de référence */
+.b1{width:19vw;height:19vw;left:5vw;top:35vh;animation-duration:4.8s;animation-delay:0s}
+.b2{width:15vw;height:15vw;left:7vw;top:60vh;animation-duration:3.9s;animation-delay:1.1s}
+.b3{width:21vw;height:21vw;left:70vw;top:31vh;animation-duration:5.3s;animation-delay:.4s}
+.b4{width:14vw;height:14vw;left:79vw;top:52vh;animation-duration:4.1s;animation-delay:1.6s}
+.b5{width:18vw;height:18vw;left:34vw;top:68vh;animation-duration:4.7s;animation-delay:.9s} /* bas centre */
+.b6{width:12vw;height:12vw;left:55vw;top:73vh;animation-duration:3.6s;animation-delay:2.1s}
+
+/* Couleurs des bulles = reflets Calanques + stories Instagram */
+.b1 .bi{background:radial-gradient(circle at 40% 40%,#1a8060,#0a5040,#02180f)} /* eau turquoise */
+.b2 .bi{background:radial-gradient(circle at 40% 40%,#d4b09a,#a07850,#301808)} /* portrait */
+.b3 .bi{background:radial-gradient(circle at 40% 40%,#c8d8e0,#6090a8,#1a2830)} /* neige */
+.b4 .bi{background:radial-gradient(circle at 40% 40%,#e0d8c0,#9a8848,#281c08)} /* serre/château */
+.b5 .bi{background:radial-gradient(circle at 40% 40%,#f0d4b0,#c09060,#402010)} /* famille */
+.b6 .bi{background:radial-gradient(circle at 40% 40%,#a8b8c8,#606878,#101820)} /* event */
+
+@keyframes bfloat{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-13px) scale(1.03)}
+}
+
+/* ── CARTE INSTAGRAM (fidèle à l'image 2) ── */
+#ig{z-index:7}
+#igcard{
   position:absolute;
-  border-radius:50%;
-  animation:fpulse 3s ease-in-out infinite;
+  left:48%;top:16vh;
+  width:46vw;max-width:210px;
+  background:rgba(255,255,255,.11);
+  backdrop-filter:blur(20px) saturate(200%);
+  -webkit-backdrop-filter:blur(20px) saturate(200%);
+  border:1px solid rgba(255,255,255,.28);
+  border-radius:18px;padding:11px 11px 9px;
+  box-shadow:0 10px 36px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.22);
+  animation:igfl 5s ease-in-out infinite;
 }
-.f1{
-  width:60vw;height:10px;
-  background:linear-gradient(90deg,transparent,rgba(255,180,60,.7),rgba(255,100,200,.5),rgba(100,200,255,.7),transparent);
-  top:52%;left:20%;
-  transform:rotate(-25deg);
+.igh{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.igav{
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,#f9a825,#e91e8c,#673ab7);
+  box-shadow:0 0 0 2px rgba(255,255,255,.55);
+  overflow:hidden;display:flex;align-items:center;justify-content:center;
+  font-size:11px;
 }
-.f2{
-  width:40vw;height:6px;
-  background:linear-gradient(90deg,transparent,rgba(180,255,100,.6),rgba(255,80,180,.5),transparent);
-  top:64%;left:35%;
-  transform:rotate(18deg);
-  animation-delay:.9s;
+.ign{color:#fff;font:700 9.5px system-ui;letter-spacing:.2px}
+.igl{color:rgba(255,255,255,.55);font:400 7.5px system-ui}
+.igs{display:flex;gap:5px;margin-bottom:5px}
+.igs-i{text-align:center;flex:1}
+.igs-n{color:#fff;font:700 9px system-ui;display:block}
+.igs-l{color:rgba(255,255,255,.55);font:400 6.5px system-ui}
+.igloc{color:rgba(255,255,255,.65);font:400 7.5px system-ui;margin-bottom:7px}
+/* Highlights */
+.ighls{display:flex;gap:5px;margin-bottom:8px;overflow:hidden}
+.ighl{
+  width:22px;height:22px;border-radius:50%;
+  border:1.5px solid rgba(255,255,255,.35);
+  flex-shrink:0;overflow:hidden;
 }
-.f3{
-  width:15vw;height:15vw;
-  background:radial-gradient(circle,rgba(255,255,255,.9)0%,rgba(200,255,255,.4)40%,transparent 70%);
-  top:48%;left:38%;
-  filter:blur(3px);
-  animation-delay:.4s;
+.ighl-1{background:radial-gradient(circle,#00c8a0,#006050)}
+.ighl-2{background:radial-gradient(circle,#d4a080,#804020)}
+.ighl-3{background:radial-gradient(circle,#80b8d0,#204060)}
+.ighl-4{background:radial-gradient(circle,#d0c8a0,#806820)}
+.ighl-5{background:radial-gradient(circle,#909090,#202020)}
+.igbtn{
+  display:block;width:100%;padding:5px;
+  background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.38);
+  border-radius:9px;color:#fff;font:700 8.5px system-ui;text-align:center;
 }
-@keyframes fpulse{
-  0%,100%{opacity:.55}
-  50%{opacity:1}
+@keyframes igfl{
+  0%,100%{transform:translateY(0) rotate(-1.5deg)}
+  50%{transform:translateY(-9px) rotate(1.5deg)}
 }
+
+/* ── CARTES FLOTTANTES STYLE MAE_COMMUNITY ── */
+#floating-cards{z-index:6}
+.fc{
+  position:absolute;
+  background:rgba(255,255,255,.1);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.25);border-radius:12px;
+  padding:7px;
+  box-shadow:0 6px 24px rgba(0,0,0,.4);
+  animation:fcfl ease-in-out infinite;
+}
+.fc-name{color:#fff;font:700 8px system-ui;margin-bottom:2px}
+.fc-stats{color:rgba(255,255,255,.7);font:400 6.5px system-ui;margin-bottom:4px}
+.fc-bar{height:3px;border-radius:2px;background:linear-gradient(90deg,#00d4b8,#7c3aed);margin-bottom:2px}
+.fc1{width:30vw;max-width:130px;left:1vw;top:22vh;animation-duration:7s;animation-delay:.3s;--r:-5deg;transform:rotate(-5deg)}
+.fc2{width:26vw;max-width:115px;left:67vw;top:60vh;animation-duration:6s;animation-delay:1.5s;--r:4deg;transform:rotate(4deg)}
+@keyframes fcfl{
+  0%,100%{transform:translateY(0) rotate(var(--r,0deg)) perspective(400px) rotateY(var(--ry,0deg))}
+  50%{transform:translateY(-8px) rotate(calc(var(--r,0deg)*-0.5)) perspective(400px) rotateY(var(--ry,0deg))}
+}
+.fc1{--ry:-8deg}.fc2{--ry:8deg}
 
 /* ── SPARKLES ── */
-.sparkle{
-  position:absolute;
-  pointer-events:none;
-  animation:spark ease-in-out infinite;
-}
-.sparkle::before,.sparkle::after{
-  content:'';position:absolute;
-  background:rgba(255,255,255,.95);border-radius:2px;
-}
-.sparkle::before{width:2px;height:16px;top:-8px;left:0}
-.sparkle::after{width:16px;height:2px;top:0;left:-8px}
-.sp1{top:12%;left:88%;animation-duration:2s;animation-delay:0s}
-.sp2{top:78%;left:88%;animation-duration:2.5s;animation-delay:.7s}
-.sp3{top:85%;left:14%;animation-duration:1.9s;animation-delay:1.2s}
-.sp4{top:5%;left:40%;animation-duration:2.2s;animation-delay:.4s}
-@keyframes spark{
-  0%,100%{opacity:0;transform:scale(.4) rotate(0deg)}
-  50%{opacity:1;transform:scale(1) rotate(45deg)}
-}
+#sparks{z-index:8}
+.sk{position:absolute;animation:skanim ease-in-out infinite}
+.sk::before,.sk::after{content:'';position:absolute;background:#fff;border-radius:2px}
+.sk::before{width:2px;height:16px;top:-8px;left:0}
+.sk::after{width:16px;height:2px;top:0;left:-8px}
+.sk1{top:10%;left:88%;animation-duration:2s}
+.sk2{top:80%;left:90%;animation-duration:2.6s;animation-delay:.6s}
+.sk3{top:88%;left:12%;animation-duration:1.9s;animation-delay:1.1s}
+.sk4{top:4%;left:42%;animation-duration:2.3s;animation-delay:.4s}
+.sk5{top:14%;left:15%;animation-duration:2.1s;animation-delay:.9s}
+@keyframes skanim{0%,100%{opacity:0;transform:scale(.3) rotate(0deg)}50%{opacity:1;transform:scale(1) rotate(45deg)}}
 
 /* ── PARTICULES ── */
-.particle{
-  position:absolute;
-  border-radius:50%;
-  animation:pdrift linear infinite;
-  pointer-events:none;
-}
-@keyframes pdrift{
-  0%{transform:translateY(0) translateX(0);opacity:0}
-  10%{opacity:.9}
-  90%{opacity:.4}
-  100%{transform:translateY(-140px) translateX(20px);opacity:0}
-}
+.pt{position:absolute;border-radius:50%;animation:ptdrift linear infinite;pointer-events:none}
+@keyframes ptdrift{0%{opacity:0;transform:translateY(0) translateX(0)}10%{opacity:.8}90%{opacity:.3}100%{opacity:0;transform:translateY(-160px) translateX(15px)}}
 
-/* ── OVERLAY GYRO HINT ── */
-#gyro-hint{
-  position:fixed;
-  bottom:6vh;left:50%;
-  transform:translateX(-50%);
-  background:rgba(0,0,0,.4);
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,.2);
-  border-radius:30px;
-  padding:8px 18px;
-  color:rgba(255,255,255,.75);
-  font-size:11px;
-  font-family:system-ui;
-  letter-spacing:.5px;
-  pointer-events:none;
-  animation:hint-fade 1s ease .5s both;
-  z-index:100;
+/* ── GYRO HINT ── */
+#hint{
+  position:fixed;bottom:5vh;left:50%;transform:translateX(-50%);
+  background:rgba(0,0,0,.45);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.2);border-radius:30px;
+  padding:8px 20px;color:rgba(255,255,255,.75);
+  font:400 11px system-ui;letter-spacing:.5px;
+  pointer-events:none;z-index:20;
+  animation:hintfade 1s ease .6s both;
 }
-@keyframes hint-fade{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes hintfade{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 
-/* ── PERMISSION BUTTON ── */
-#perm-btn{
-  display:none;
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.7);
-  backdrop-filter:blur(10px);
-  z-index:200;
-  align-items:center;justify-content:center;
-  flex-direction:column;gap:16px;
+/* ── iOS PERMISSION ── */
+#perm{
+  display:none;position:fixed;inset:0;z-index:900;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(12px);
+  align-items:center;justify-content:center;flex-direction:column;gap:18px;
 }
-#perm-btn button{
-  background:linear-gradient(135deg,#00d4b8,#7c3aed);
-  border:none;border-radius:40px;
-  color:#fff;font-size:15px;font-weight:700;
-  padding:16px 36px;
-  cursor:pointer;font-family:system-ui;
-  box-shadow:0 8px 30px rgba(0,212,184,.4);
+#perm p{color:rgba(255,255,255,.85);font:400 14px system-ui;text-align:center;padding:0 36px}
+#perm button{
+  background:linear-gradient(135deg,#00d4b8,#7c3aed);border:none;
+  border-radius:40px;color:#fff;font:700 15px system-ui;
+  padding:16px 38px;cursor:pointer;box-shadow:0 8px 30px rgba(0,212,184,.4);
 }
-#perm-btn p{color:rgba(255,255,255,.8);font-family:system-ui;font-size:13px;text-align:center;padding:0 30px}
 </style>
 </head>
 <body>
 
-<!-- Permission overlay pour iOS -->
-<div id="perm-btn">
-  <p>Autorise le gyroscope pour l'effet de profondeur</p>
-  <button onclick="requestGyro()">Activer le gyroscope</button>
+<!-- ── ÉCRAN SÉLECTION PHOTO ── -->
+<div id="pick-screen">
+  <div class="pick-preview" id="pickPreview"><span>📷</span><img id="previewImg" alt=""/></div>
+  <h1>Ajoute ta photo</h1>
+  <p>Sélectionne ta photo depuis ta galerie — elle reste sur ton téléphone, rien n'est envoyé</p>
+  <input type="file" id="file-input" accept="image/*" capture="environment"/>
+  <button id="pick-btn" onclick="document.getElementById('file-input').click()">Choisir ma photo 📷</button>
 </div>
 
-<!-- CALQUE 0 : photo de fond (bouge très peu) -->
-<div id="photo-bg" class="layer" data-speed="0.4"></div>
+<!-- ── SCÈNE ANIMATION ── -->
+<div id="scene">
 
-<!-- CALQUE 1 : anneaux orbitaux (vitesse moyenne) -->
-<div class="layer" id="rings" data-speed="1.4">
-  <div class="ring ring-1"></div>
-  <div class="ring ring-2"></div>
-</div>
-
-<!-- CALQUE 2 : lens flares -->
-<div class="layer" id="flares" data-speed="1.8">
-  <div class="flare f1"></div>
-  <div class="flare f2"></div>
-  <div class="flare f3"></div>
-</div>
-
-<!-- CALQUE 3 : cartes photos plates (éloignées) -->
-<div class="layer" id="pcards" data-speed="2.2">
-  <div class="pcard pc1"><div class="pcard-inner"></div></div>
-  <div class="pcard pc2"><div class="pcard-inner"></div></div>
-  <div class="pcard pc3"><div class="pcard-inner"></div></div>
-  <div class="pcard pc4"><div class="pcard-inner"></div></div>
-</div>
-
-<!-- CALQUE 4 : bulles (plus proches) -->
-<div class="layer" id="bubbles" data-speed="3">
-  <div class="bubble b1"><div class="bubble-inner"></div></div>
-  <div class="bubble b2"><div class="bubble-inner"></div></div>
-  <div class="bubble b3"><div class="bubble-inner"></div></div>
-  <div class="bubble b4"><div class="bubble-inner"></div></div>
-  <div class="bubble b5"><div class="bubble-inner"></div></div>
-  <div class="bubble b6"><div class="bubble-inner"></div></div>
-</div>
-
-<!-- CALQUE 5 : carte Instagram (premier plan) -->
-<div class="layer" data-speed="4">
-  <div id="ig-card">
-    <div class="ig-head">
-      <div class="ig-avatar"></div>
-      <div>
-        <div class="ig-lock">🔒 romane.long</div>
-        <div class="ig-name">Romane ✨</div>
-      </div>
-    </div>
-    <div class="ig-stats">
-      <div class="ig-s"><span class="ig-s-n">3</span><span class="ig-s-l">publications</span></div>
-      <div class="ig-s"><span class="ig-s-n">623</span><span class="ig-s-l">followers</span></div>
-      <div class="ig-s"><span class="ig-s-n">912</span><span class="ig-s-l">suivi(e)s</span></div>
-    </div>
-    <div class="ig-loc">📍 Marseille, Paris</div>
-    <div class="ig-btn">Modifier</div>
+  <div id="perm">
+    <p>Active le gyroscope pour regarder autour de toi</p>
+    <button onclick="requestGyro()">Activer le gyroscope</button>
   </div>
-</div>
 
-<!-- CALQUE 6 : sparkles + particules -->
-<div class="layer" id="sparks" data-speed="3.5">
-  <div class="sparkle sp1"></div>
-  <div class="sparkle sp2"></div>
-  <div class="sparkle sp3"></div>
-  <div class="sparkle sp4"></div>
-</div>
+  <!-- L0 : Photo de fond -->
+  <div id="photo-bg" class="layer" data-spd=".5"></div>
 
-<div id="gyro-hint">📱 Bouge ton téléphone pour regarder autour</div>
+  <!-- L1 : Anneaux -->
+  <div class="layer" id="rings" data-spd="1.5">
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+  </div>
+
+  <!-- L2 : Flares -->
+  <div class="layer" id="flares" data-spd="1.9">
+    <div class="flare fl1"></div>
+    <div class="flare fl2"></div>
+    <div class="flare fl3"></div>
+    <div class="flare fl4"></div>
+  </div>
+
+  <!-- L3 : Cartes photos plates -->
+  <div class="layer" id="cards" data-spd="2.4">
+    <div class="pc pc1"><div class="pc-inner"></div></div>
+    <div class="pc pc2"><div class="pc-inner"></div></div>
+    <div class="pc pc3"><div class="pc-inner"></div></div>
+    <div class="pc pc4"><div class="pc-inner"></div></div>
+  </div>
+
+  <!-- L4 : Cartes flottantes style mae_community -->
+  <div class="layer" id="floating-cards" data-spd="3">
+    <div class="fc fc1">
+      <div class="fc-name">romane.long</div>
+      <div class="fc-stats">623 followers · 912 suivi(e)s</div>
+      <div class="fc-bar" style="width:68%"></div>
+      <div class="fc-stats">Marseille, Paris</div>
+    </div>
+    <div class="fc fc2">
+      <div class="fc-name">Romane ✨</div>
+      <div class="fc-stats">3 publications</div>
+      <div class="fc-bar" style="width:45%"></div>
+      <div class="fc-stats">MSc IA Applied to Business</div>
+    </div>
+  </div>
+
+  <!-- L5 : Bulles -->
+  <div class="layer" id="bubbles" data-spd="3.2">
+    <div class="bbl b1"><div class="bi"></div></div>
+    <div class="bbl b2"><div class="bi"></div></div>
+    <div class="bbl b3"><div class="bi"></div></div>
+    <div class="bbl b4"><div class="bi"></div></div>
+    <div class="bbl b5"><div class="bi"></div></div>
+    <div class="bbl b6"><div class="bi"></div></div>
+  </div>
+
+  <!-- L6 : Carte Instagram principale -->
+  <div class="layer" id="ig" data-spd="4">
+    <div id="igcard">
+      <div class="igh">
+        <div class="igav">📷</div>
+        <div>
+          <div class="igl">🔒 romane.long ∨</div>
+          <div class="ign">Romane ✨</div>
+        </div>
+      </div>
+      <div class="igs">
+        <div class="igs-i"><span class="igs-n">3</span><span class="igs-l">publications</span></div>
+        <div class="igs-i"><span class="igs-n">623</span><span class="igs-l">followers</span></div>
+        <div class="igs-i"><span class="igs-n">912</span><span class="igs-l">suivi(e)s</span></div>
+      </div>
+      <div class="igloc">📍 Marseille, Paris</div>
+      <div class="ighls">
+        <div class="ighl ighl-1"></div>
+        <div class="ighl ighl-2"></div>
+        <div class="ighl ighl-3"></div>
+        <div class="ighl ighl-4"></div>
+        <div class="ighl ighl-5"></div>
+      </div>
+      <div class="igbtn">Modifier</div>
+    </div>
+  </div>
+
+  <!-- L7 : Sparkles + particules -->
+  <div class="layer" id="sparks" data-spd="3.8">
+    <div class="sk sk1"></div>
+    <div class="sk sk2"></div>
+    <div class="sk sk3"></div>
+    <div class="sk sk4"></div>
+    <div class="sk sk5"></div>
+  </div>
+
+  <div id="hint">📱 Incline ton téléphone pour regarder autour</div>
+
+</div><!-- /scene -->
 
 <script>
-// ── Particules dynamiques ──
-const sparks = document.getElementById('sparks');
-for(let i=0;i<20;i++){
-  const p = document.createElement('div');
-  p.className='particle';
-  const c = Math.random()>.5 ? `100,255,220` : `180,100,255`;
-  const s = 2+Math.random()*4;
-  p.style.cssText=`
-    left:${Math.random()*100}%;
-    top:${40+Math.random()*55}%;
-    width:${s}px;height:${s}px;
-    background:rgba(${c},${.4+Math.random()*.5});
-    animation-duration:${4+Math.random()*7}s;
-    animation-delay:${-Math.random()*9}s;
-  `;
-  sparks.appendChild(p);
+// ── PHOTO PICKER ──
+const fileInput = document.getElementById('file-input');
+const pickScreen = document.getElementById('pick-screen');
+const scene = document.getElementById('scene');
+const photoBg = document.getElementById('photo-bg');
+const previewImg = document.getElementById('previewImg');
+const pickPreview = document.getElementById('pickPreview');
+
+// Essaie de récupérer la photo en cache (IndexedDB)
+const DB_NAME='romane_anim', DB_STORE='photos';
+let db;
+const openDB = () => new Promise(res=>{
+  const req = indexedDB.open(DB_NAME,1);
+  req.onupgradeneeded=e=>e.target.result.createObjectStore(DB_STORE);
+  req.onsuccess=e=>{db=e.target.result;res(db)};
+  req.onerror=()=>res(null);
+});
+const savePhoto = blob => new Promise(res=>{
+  if(!db)return res();
+  const tx=db.transaction(DB_STORE,'readwrite');
+  tx.objectStore(DB_STORE).put(blob,'main');
+  tx.oncomplete=res;
+});
+const loadPhoto = () => new Promise(res=>{
+  if(!db)return res(null);
+  const req=db.transaction(DB_STORE,'readonly').objectStore(DB_STORE).get('main');
+  req.onsuccess=e=>res(e.target.result||null);
+  req.onerror=()=>res(null);
+});
+
+function applyPhoto(blob){
+  const url = URL.createObjectURL(blob);
+  photoBg.style.backgroundImage = `url(${url})`;
+  previewImg.src = url;
+  previewImg.style.display='block';
+  pickPreview.querySelector('span').style.display='none';
 }
 
-// ── Gyroscope / parallaxe ──
-const layers = [...document.querySelectorAll('.layer')];
-let curX=0, curY=0;
-let tgtX=0, tgtY=0;
-const MAX=28; // degrés max considérés
+function startScene(){
+  pickScreen.style.display='none';
+  scene.style.display='block';
+  initParticles();
+  initGyro();
+  loopAnim();
+}
 
-function applyParallax(x,y){
+fileInput.addEventListener('change', async e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  applyPhoto(file);
+  await openDB();
+  await savePhoto(file);
+  startScene();
+});
+
+// Au chargement : cherche photo en cache
+(async()=>{
+  await openDB();
+  const cached = await loadPhoto();
+  if(cached){
+    applyPhoto(cached);
+    startScene();
+  }
+})();
+
+// ── PARTICULES ──
+function initParticles(){
+  const sp = document.getElementById('sparks');
+  for(let i=0;i<22;i++){
+    const p=document.createElement('div');
+    p.className='pt';
+    const c=Math.random()>.5?'100,255,220':'180,100,255';
+    const s=2+Math.random()*4;
+    p.style.cssText=`left:${Math.random()*100}%;top:${38+Math.random()*56}%;width:${s}px;height:${s}px;background:rgba(${c},${.4+Math.random()*.5});animation-duration:${4+Math.random()*7}s;animation-delay:${-Math.random()*10}s`;
+    sp.appendChild(p);
+  }
+}
+
+// ── PARALLAXE GYRO ──
+const layers=[...document.querySelectorAll('#scene .layer')];
+let cx=0,cy=0,tx=0,ty=0;
+const MAX=30;
+
+function applyP(x,y){
   layers.forEach(l=>{
-    const s = parseFloat(l.dataset.speed||1);
-    l.style.transform = `translate(${x*s}px, ${y*s}px)`;
+    const s=parseFloat(l.dataset.spd||1);
+    l.style.transform=`translate(${x*s}px,${y*s}px)`;
   });
 }
 
-// Animation loop (smooth lerp)
-function loop(){
-  curX += (tgtX-curX)*.08;
-  curY += (tgtY-curY)*.08;
-  applyParallax(curX,curY);
-  requestAnimationFrame(loop);
+function loopAnim(){
+  cx+=(tx-cx)*.07;
+  cy+=(ty-cy)*.07;
+  applyP(cx,cy);
+  requestAnimationFrame(loopAnim);
 }
-loop();
 
-function onOrientation(e){
-  // gamma = gauche/droite (-90 à 90), beta = avant/arrière (0 à 180)
-  const gamma = Math.max(-MAX, Math.min(MAX, e.gamma||0));
-  const beta  = Math.max(-MAX, Math.min(MAX, (e.beta||0)-45)); // 45° = position naturelle
-  tgtX = (gamma/MAX)*18;  // ±18px pour le layer 1x
-  tgtY = (beta /MAX)*12;
+function onOri(e){
+  tx=Math.max(-MAX,Math.min(MAX,e.gamma||0))/MAX*20;
+  ty=Math.max(-MAX,Math.min(MAX,(e.beta||0)-45))/MAX*14;
 }
 
 function startGyro(){
-  window.addEventListener('deviceorientation', onOrientation, true);
-  document.getElementById('gyro-hint').textContent = '✨ Bouge ton téléphone !';
-  setTimeout(()=>{
-    document.getElementById('gyro-hint').style.opacity='0';
-  }, 3000);
+  window.addEventListener('deviceorientation',onOri,true);
+  const hint=document.getElementById('hint');
+  hint.textContent='✨ Tourne et incline ton téléphone !';
+  setTimeout(()=>hint.style.opacity='0',3500);
 }
 
 function requestGyro(){
-  document.getElementById('perm-btn').style.display='none';
-  if(typeof DeviceOrientationEvent!=='undefined' &&
-     typeof DeviceOrientationEvent.requestPermission==='function'){
-    DeviceOrientationEvent.requestPermission()
-      .then(r=>{ if(r==='granted') startGyro(); })
-      .catch(()=>{});
+  document.getElementById('perm').style.display='none';
+  if(DeviceOrientationEvent?.requestPermission){
+    DeviceOrientationEvent.requestPermission().then(r=>{if(r==='granted')startGyro()}).catch(()=>{});
+  }else startGyro();
+}
+
+function initGyro(){
+  if(typeof DeviceOrientationEvent==='undefined'){
+    document.addEventListener('mousemove',e=>{
+      tx=(e.clientX/innerWidth-.5)*32;
+      ty=(e.clientY/innerHeight-.5)*22;
+    });
+    document.getElementById('hint').textContent='🖱️ Bouge ta souris';
+  } else if(DeviceOrientationEvent?.requestPermission){
+    document.getElementById('perm').style.display='flex';
   } else {
     startGyro();
   }
+  document.addEventListener('touchmove',e=>{
+    const t=e.touches[0];
+    tx=(t.clientX/innerWidth-.5)*32;
+    ty=(t.clientY/innerHeight-.5)*22;
+  },{passive:true});
 }
-
-// Démarrage auto (Android / navigateurs sans permission)
-if(typeof DeviceOrientationEvent!=='undefined'){
-  if(typeof DeviceOrientationEvent.requestPermission==='function'){
-    // iOS 13+ : besoin d'un geste utilisateur
-    document.getElementById('perm-btn').style.display='flex';
-  } else {
-    // Android / autres : auto
-    startGyro();
-  }
-} else {
-  // Desktop fallback : souris
-  document.addEventListener('mousemove',e=>{
-    tgtX = (e.clientX/window.innerWidth-.5)*30;
-    tgtY = (e.clientY/window.innerHeight-.5)*20;
-  });
-  document.getElementById('gyro-hint').textContent = '🖱️ Bouge ta souris pour l\'effet';
-}
-
-// Touch fallback pour iPhone sans permission
-document.addEventListener('touchmove',e=>{
-  const t = e.touches[0];
-  tgtX = (t.clientX/window.innerWidth-.5)*30;
-  tgtY = (t.clientY/window.innerHeight-.5)*20;
-},{passive:true});
 </script>
 </body>
 </html>
