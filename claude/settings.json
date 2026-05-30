@@ -1,0 +1,10 @@
+{
+  "model": "claude-haiku-4-5-20251001",
+  "context_files": [
+    "CLAUDE.md",
+    "AGENTS.md",
+    "SKILLS.md",
+    "src/lib/portfolio-data.ts",
+    "lib/portfolio-data.ts"
+  ]
+}
