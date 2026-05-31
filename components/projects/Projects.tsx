@@ -131,7 +131,7 @@ function ProjectCard({
   project: (typeof projects)[number]
   index: number
 }) {
-  const { t } = useLang()
+  const { lang, t } = useLang()
   const cardRef = useRef<HTMLDivElement>(null)
   const [imgError, setImgError] = useState(false)
   const [lightboxOpen, setLightboxOpen] = useState(false)
@@ -149,9 +149,13 @@ function ProjectCard({
   const hasPhotos = project.photos.length > 0
   const hasGithub = project.github && !project.github.startsWith("[À_COMPLÉTER")
   const hasDemo = project.demo && !project.demo.startsWith("[À_COMPLÉTER")
-  const description = project.description.startsWith("[À_COMPLÉTER")
-    ? null
+  const rawDesc = lang === "en" && "description_en" in project
+    ? (project as {description_en?: string}).description_en || project.description
     : project.description
+  const description = rawDesc.startsWith("[À_COMPLÉTER") ? null : rawDesc
+  const subtitle = lang === "en" && "subtitle_en" in project
+    ? (project as {subtitle_en?: string}).subtitle_en || project.subtitle
+    : project.subtitle
 
   return (
     <>
@@ -256,7 +260,7 @@ function ProjectCard({
               {project.title}
             </h3>
             <p className="text-xs mt-0.5" style={{ color: "var(--text-2)" }}>
-              {project.subtitle}
+              {subtitle}
             </p>
           </div>
 

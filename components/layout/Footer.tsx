@@ -1,6 +1,10 @@
+"use client"
+
 import { profile } from "@/src/lib/portfolio-data"
+import { useLang } from "@/src/lib/language-context"
 
 export default function Footer() {
+  const { t } = useLang()
   const year = new Date().getFullYear()
 
   return (
@@ -46,7 +50,7 @@ export default function Footer() {
       </div>
 
       <p className="text-[10px]" style={{ color: "var(--text-3)", opacity: 0.5 }}>
-        Fait avec IA, ambition et du café.
+        {t("footerMade")}
       </p>
     </footer>
   )

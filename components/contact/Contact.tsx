@@ -21,11 +21,12 @@ const PARTICLES = [
 ]
 
 export default function Contact() {
-  const { t } = useLang()
+  const { lang, t } = useLang()
   const rdvHref = profile.bookingUrl || `mailto:${profile.email}`
   const rdvIsExternal = !!profile.bookingUrl
 
-  const [line1, line2] = profile.pitch.split(". ")
+  const pitch = lang === "en" ? profile.pitch_en : profile.pitch
+  const [line1, line2] = pitch.split(". ")
 
   return (
     <section

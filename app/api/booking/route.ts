@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 
 const BOOKING_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbwFVe2yiLUTfpVIH4Vewd8Gy7OOMDd3FIBZbaU2P49bY8_tyQY7KIDRMeQj2ZE-_Q57/exec"
+  "https://script.google.com/macros/s/AKfycbytnmZpgytK_h1EYRxYYFafghUKUffgf-gquOdeiuvyFWXtHHF29vmaDHoCBr-NxpTg/exec"
 
 export async function POST(req: NextRequest) {
   try {

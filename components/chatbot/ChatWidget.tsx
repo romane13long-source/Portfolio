@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { agents, profile } from "@/src/lib/portfolio-data"
+import { useLang } from "@/src/lib/language-context"
 
 // ──────────────────────────────────────────────
 // Types
@@ -118,6 +119,7 @@ function BotBubble({ msg, isLast }: { msg: Message; isLast: boolean }) {
 // Booking CTA — poste vers /api/booking
 // ──────────────────────────────────────────────
 function BookingCTA({ onClose }: { onClose: () => void }) {
+  const { t } = useLang()
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error" | "invalid">("idle")
   const [form, setForm] = useState({ name: "", email: "", date: "", time: "", duration: "30", format: "Google Meet" })
 
@@ -140,19 +142,19 @@ function BookingCTA({ onClose }: { onClose: () => void }) {
   if (status === "done") {
     return (
       <div className="mt-2 p-3 rounded-xl text-xs" style={{ background: "rgba(20,184,166,0.1)", color: "var(--teal)", border: "1px solid rgba(20,184,166,0.25)" }}>
-        Demande envoyée. Romane reviendra vers toi rapidement.
+        {t("bookingDone")}
       </div>
     )
   }
 
   return (
     <div className="mt-2 p-3 rounded-xl flex flex-col gap-2" style={{ background: "var(--bg-card)", border: "1px solid var(--glass-border)" }}>
-      <p className="text-[11px] font-medium" style={{ color: "var(--teal)" }}>Proposer un créneau</p>
+      <p className="text-[11px] font-medium" style={{ color: "var(--teal)" }}>{t("bookingFormTitle")}</p>
       {(["name", "email", "date", "time"] as const).map((field) => (
         <input
           key={field}
           type={field === "email" ? "email" : field === "date" ? "date" : field === "time" ? "time" : "text"}
-          placeholder={field === "name" ? "Votre nom" : field === "email" ? "Email" : field === "date" ? "Date" : "Heure"}
+          placeholder={field === "name" ? t("namePlaceholder") : field === "email" ? t("emailPlaceholder") : field === "date" ? t("datePlaceholder") : t("timePlaceholder")}
           value={form[field]}
           onChange={(e) => setForm((f) => ({ ...f, [field]: e.target.value }))}
           className="w-full rounded-lg px-3 py-1.5 text-xs outline-none"
@@ -185,16 +187,16 @@ function BookingCTA({ onClose }: { onClose: () => void }) {
         className="rounded-lg py-1.5 text-xs font-medium transition-transform hover:scale-[1.02] disabled:opacity-50"
         style={{ background: "linear-gradient(135deg, #14B8A6, #06B6D4)", color: "#020408" }}
       >
-        {status === "sending" ? "Envoi…" : "Envoyer la demande"}
+        {status === "sending" ? t("sending") : t("sendRequest")}
       </button>
       {status === "invalid" && (
         <p className="text-[10px] text-center" style={{ color: "#F87171" }}>
-          Veuillez remplir tous les champs.
+          {t("fillFields")}
         </p>
       )}
       {status === "error" && (
         <p className="text-[10px] text-center" style={{ color: "#F87171" }}>
-          Erreur — contacte Romane directement : {profile.email}
+          {t("bookingError")} {profile.email}
         </p>
       )}
     </div>

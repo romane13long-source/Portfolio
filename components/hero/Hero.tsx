@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { profile } from "@/src/lib/portfolio-data"
+import { useLang } from "@/src/lib/language-context"
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 20 },
@@ -14,6 +15,7 @@ const fadeUp = (delay: number) => ({
 })
 
 export default function Hero() {
+  const { lang, t } = useLang()
   return (
     <section className="relative h-screen overflow-hidden">
 
@@ -65,7 +67,7 @@ export default function Hero() {
           }}
           {...fadeUp(0.25)}
         >
-          Welcome to my universe
+          {t("heroWelcome")}
         </motion.p>
 
         <motion.p
@@ -80,7 +82,7 @@ export default function Hero() {
           style={{ color: "var(--text-2)" }}
           {...fadeUp(0.4)}
         >
-          {profile.tagline}
+          {lang === "en" ? profile.tagline_en : profile.tagline}
         </motion.p>
 
         {/* Boutons */}
@@ -128,7 +130,7 @@ export default function Hero() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.8 }}
       >
-        <span className="text-[10px] tracking-widest uppercase">Scroll</span>
+        <span className="text-[10px] tracking-widest uppercase">{t("heroScroll")}</span>
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="animate-bounce">
           <path d="M8 3v10M8 13l-3-3M8 13l3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>

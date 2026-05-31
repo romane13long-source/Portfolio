@@ -9,8 +9,8 @@ import { useLang } from "@/src/lib/language-context"
 const TIERS = [
   {
     id: 1,
-    label: "Différenciantes",
-    subtitle: "Mon avantage concurrentiel",
+    labelKey: "tier1Label" as const,
+    subtitleKey: "tier1Sub" as const,
     skills: [
       "Prompt Engineering",
       "Agents IA",
@@ -29,8 +29,8 @@ const TIERS = [
   },
   {
     id: 2,
-    label: "Solides",
-    subtitle: "Maîtrise opérationnelle prouvée",
+    labelKey: "tier2Label" as const,
+    subtitleKey: "tier2Sub" as const,
     skills: [
       "Python", "SQL", "Power BI", "Tableau",
       "n8n", "Make.com", "OpenAI API",
@@ -45,8 +45,8 @@ const TIERS = [
   },
   {
     id: 3,
-    label: "Opérationnelles",
-    subtitle: "Utilisées quotidiennement",
+    labelKey: "tier3Label" as const,
+    subtitleKey: "tier3Sub" as const,
     skills: [
       "Excel/VBA", "Power Apps", "Power Automate",
       "UiPath", "SharePoint", "Airtable", "R-Studio",
@@ -146,7 +146,7 @@ export default function Skills() {
               color: "var(--text-1)",
             }}
           >
-            Mon stack
+            {t("stackTitle")}
           </h2>
         </motion.div>
 
@@ -186,13 +186,13 @@ export default function Skills() {
                   className="text-sm font-semibold"
                   style={{ color: "var(--text-1)" }}
                 >
-                  {tier.label}
+                  {t(tier.labelKey)}
                 </span>
                 <span
                   className="text-xs hidden sm:inline"
                   style={{ color: "var(--text-3)" }}
                 >
-                  — {tier.subtitle}
+                  — {t(tier.subtitleKey)}
                 </span>
               </div>
 

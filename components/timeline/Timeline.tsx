@@ -3,6 +3,7 @@
 import { useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { timelineWork, timelineEducation } from "@/src/lib/portfolio-data"
+import { useLang } from "@/src/lib/language-context"
 
 // ──────────────────────────────────────────────
 // Carte d'événement
@@ -13,10 +14,12 @@ function TimelineCard({
   item,
   index,
   accent,
+  lang,
 }: {
   item: TimelineItem
   index: number
   accent: string
+  lang: "fr" | "en"
 }) {
   return (
     <motion.div
@@ -66,7 +69,7 @@ function TimelineCard({
           className="text-sm font-semibold leading-snug mb-0.5"
           style={{ color: "var(--text-1)" }}
         >
-          {item.title}
+          {lang === "en" && "title_en" in item ? (item as {title_en?: string}).title_en || item.title : item.title}
         </h3>
         {item.orgUrl ? (
           <a
@@ -84,7 +87,7 @@ function TimelineCard({
           </p>
         )}
         <p className="text-xs mt-2 leading-relaxed" style={{ color: "var(--text-3)" }}>
-          {item.description}
+          {lang === "en" && "description_en" in item ? (item as {description_en?: string}).description_en || item.description : item.description}
         </p>
       </div>
     </motion.div>
@@ -100,12 +103,14 @@ function TimelineColumn({
   items,
   accent,
   scrollRef,
+  lang,
 }: {
   label: string
   icon: string
   items: TimelineItem[]
   accent: string
   scrollRef: React.RefObject<HTMLElement | null>
+  lang: "fr" | "en"
 }) {
   const { scrollYProgress } = useScroll({
     target: scrollRef,
@@ -154,7 +159,7 @@ function TimelineColumn({
 
         {/* Événements */}
         {items.map((item, i) => (
-          <TimelineCard key={i} item={item} index={i} accent={accent} />
+          <TimelineCard key={i} item={item} index={i} accent={accent} lang={lang} />
         ))}
       </div>
     </div>
@@ -166,6 +171,7 @@ function TimelineColumn({
 // ──────────────────────────────────────────────
 export default function Timeline() {
   const sectionRef = useRef<HTMLElement>(null)
+  const { lang, t } = useLang()
 
   return (
     <section
@@ -202,7 +208,7 @@ export default function Timeline() {
             className="text-xs font-medium tracking-[0.2em] uppercase mb-3"
             style={{ color: "var(--teal)" }}
           >
-            Parcours
+            {t("journey")}
           </p>
           <h2
             className="font-semibold"
@@ -211,18 +217,19 @@ export default function Timeline() {
               color: "var(--text-1)",
             }}
           >
-            Mon chemin
+            {t("journeyTitle")}
           </h2>
         </motion.div>
 
         {/* 2 colonnes desktop — colonne unique mobile */}
         <div className="flex flex-col md:flex-row gap-12 md:gap-16">
           <TimelineColumn
-            label="Travail"
+            label={t("journeyWork")}
             icon=""
             items={timelineWork}
             accent="#14B8A6"
             scrollRef={sectionRef}
+            lang={lang}
           />
 
           {/* Séparateur vertical desktop */}
@@ -235,11 +242,12 @@ export default function Timeline() {
           />
 
           <TimelineColumn
-            label="École"
+            label={t("journeySchool")}
             icon=""
             items={timelineEducation}
             accent="#06B6D4"
             scrollRef={sectionRef}
+            lang={lang}
           />
         </div>
       </div>
