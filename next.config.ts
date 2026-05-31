@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   // Activé uniquement pour GitHub Pages (STATIC_EXPORT=true dans le workflow)
   ...(isStaticExport && {
     output: "export",
+    basePath: "/Portfolio",
+    trailingSlash: true,
     images: { unoptimized: true },
   }),
 };
