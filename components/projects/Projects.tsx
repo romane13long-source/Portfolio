@@ -192,19 +192,24 @@ function ProjectCard({
             </motion.div>
           )}
 
-          {/* Overlay hover */}
-          <div
-            className="absolute inset-0 flex items-center justify-center
-                        opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            style={{ background: "rgba(2,4,8,0.55)" }}
-          >
-            <span
-              className="text-sm font-medium tracking-wide"
-              style={{ color: "var(--teal-bright, #2DD4BF)" }}
+          {/* Overlay hover — cliquable si lien disponible */}
+          {(hasDemo || hasGithub) && (
+            <a
+              href={(hasDemo ? project.demo : project.github) as string}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute inset-0 flex items-center justify-center
+                          opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{ background: "rgba(2,4,8,0.55)" }}
             >
-              {t("viewProject")} →
-            </span>
-          </div>
+              <span
+                className="text-sm font-medium tracking-wide"
+                style={{ color: "var(--teal-bright, #2DD4BF)" }}
+              >
+                {t("viewProject")} →
+              </span>
+            </a>
+          )}
 
           {/* Badge award — sans emoji */}
           {project.award && (

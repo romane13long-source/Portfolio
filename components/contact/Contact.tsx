@@ -174,10 +174,8 @@ export default function Contact() {
             Email
           </a>
 
-          <a
-            href={rdvHref}
-            target={rdvIsExternal ? "_blank" : undefined}
-            rel={rdvIsExternal ? "noopener noreferrer" : undefined}
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent("open-booking"))}
             className="flex items-center gap-2 px-5 py-3 rounded-full text-sm font-medium transition-transform hover:scale-105"
             style={{
               background: "linear-gradient(135deg, #14B8A6, #06B6D4)",
@@ -187,7 +185,7 @@ export default function Contact() {
             }}
           >
             {t("bookMeeting")}
-          </a>
+          </button>
         </motion.div>
 
         {/* Email discret */}

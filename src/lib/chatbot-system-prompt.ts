@@ -4,7 +4,7 @@
 // Modèle cible : claude-haiku-4-5-20251001, max 300 tokens
 // ============================================================
 
-import { profile } from "@/src/lib/portfolio-data"
+import { profile } from "@/lib/portfolio-data"
 
 export function buildSystemPrompt(): string {
   return `
@@ -99,7 +99,7 @@ Compétence / stack / outil / sait faire / techno
 
 RDV / rendez-vous / entretien / meeting / call / visio / planifier / booker / créneau
 → Activer SYNC. Proposer le BookingAgent intégré directement dans ce chat : demander nom, email, date souhaitée, heure, durée (30/45/60 min), format (Google Meet / Téléphone / Présentiel).
-URL BookingAgent (usage interne SYNC uniquement) : https://script.google.com/macros/s/AKfycbyl1yNubgVntoV6zxCHSUBfJYeWLUfO0uLhOay8xvkKjFLQvHZSmjkpTZAuV8Ip_8LW/exec
+URL BookingAgent (usage interne SYNC uniquement) : https://script.google.com/macros/s/AKfycbwFVe2yiLUTfpVIH4Vewd8Gy7OOMDd3FIBZbaU2P49bY8_tyQY7KIDRMeQj2ZE-_Q57/exec
 
 Hors sujet (météo, politique, autre personne, code extérieur…)
 → Décliner poliment. "Je suis ici pour parler de Romane et de son parcours."

@@ -118,11 +118,11 @@ function BotBubble({ msg, isLast }: { msg: Message; isLast: boolean }) {
 // Booking CTA — poste vers /api/booking
 // ──────────────────────────────────────────────
 function BookingCTA({ onClose }: { onClose: () => void }) {
-  const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle")
+  const [status, setStatus] = useState<"idle" | "sending" | "done" | "error" | "invalid">("idle")
   const [form, setForm] = useState({ name: "", email: "", date: "", time: "", duration: "30", format: "Google Meet" })
 
   async function submit() {
-    if (!form.name || !form.email || !form.date || !form.time) return
+    if (!form.name || !form.email || !form.date || !form.time) { setStatus("invalid"); return }
     setStatus("sending")
     try {
       const res = await fetch("/api/booking", {
@@ -187,6 +187,11 @@ function BookingCTA({ onClose }: { onClose: () => void }) {
       >
         {status === "sending" ? "Envoi…" : "Envoyer la demande"}
       </button>
+      {status === "invalid" && (
+        <p className="text-[10px] text-center" style={{ color: "#F87171" }}>
+          Veuillez remplir tous les champs.
+        </p>
+      )}
       {status === "error" && (
         <p className="text-[10px] text-center" style={{ color: "#F87171" }}>
           Erreur — contacte Romane directement : {profile.email}
@@ -230,6 +235,12 @@ export default function ChatWidget() {
   useEffect(() => {
     if (open) setTimeout(() => inputRef.current?.focus(), 300)
   }, [open])
+
+  useEffect(() => {
+    function handleOpenBooking() { setOpen(true); setTimeout(() => setShowBooking(true), 300) }
+    window.addEventListener("open-booking", handleOpenBooking)
+    return () => window.removeEventListener("open-booking", handleOpenBooking)
+  }, [])
 
   const sendMessage = useCallback(async (text: string) => {
     const trimmed = text.trim().slice(0, 600)
